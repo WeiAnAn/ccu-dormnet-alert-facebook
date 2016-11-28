@@ -12,7 +12,7 @@ var config = require('./config.js');
 var mysql = require('mysql2');
 var connection = mysql.createConnection(config.mysql_account);
 var conversation = [
-	1175499009210646, //Demo
+	//1175499009210646, //Demo
 	1178475045563831, //網管會議
 	1362432280452935  //105幹部版
 ]
@@ -31,9 +31,9 @@ connection.query(sql, function(err, rows){
 			if(err)
 				return console.log(err);
 
-			for(var i = 0; i < rows.length; i++){
+			if(rows.length > 3){
 				var message = {
-					body: `${rows[i].description} ( ${rows[i].hostname} ) 下線啦!!`
+					body: "[爆炸] 一堆機器 下線啦!! 詳見S_monitor"
 				};
 				for(var j = 0; j < conversation.length; j++){
 					api.sendMessage(message,conversation[j],function(err, message){
@@ -41,6 +41,19 @@ connection.query(sql, function(err, rows){
 							console.log(err);
 						console.log(message);
 					});
+				}
+			}else{
+				for(var i = 0; i < rows.length; i++){
+					var message = {
+						body: `${rows[i].description} ( ${rows[i].hostname} ) 下線啦!!`
+					};
+					for(var j = 0; j < conversation.length; j++){
+						api.sendMessage(message,conversation[j],function(err, message){
+							if(err)
+								console.log(err);
+							console.log(message);
+						});
+					}
 				}
 			}
 		});
