@@ -1,0 +1,12 @@
+module.exports = {
+    fb_account: {
+        email: 'yourusername@domain.com',
+        password: 'yourpassword'
+    },
+    mysql_account:{
+        host: 'mysqlhost',
+        user: 'mysqluser',
+        password: 'mysqlpasswd',
+        database: 'database'
+    }
+};
